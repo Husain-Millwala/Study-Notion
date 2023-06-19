@@ -3,7 +3,7 @@ const OTP = require("../Models/OTP");
 const Profile = require("../Models/Profile");
 const mailSender = require("../Utils/MailSender");
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
-const OTPGenerator = require("otp-generator");
+const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -35,6 +35,14 @@ exports.signup = async (req, res) => {
         message: "All fields are required ",
       });
     }
+
+    // if (password !== "^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[a-zA-Zd]{8,}$") {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message:
+    //       "Password must includes 1 upper case, 1 lower case, 1 number, and 1 symbol",
+    //   });
+    // }
 
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -89,7 +97,7 @@ exports.signup = async (req, res) => {
       password: hashedPassword,
       accountType,
       additionalDetails: profileDetails._id,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}{" "} ${lastName}`,
     });
 
     return res.status(200).json({
@@ -169,6 +177,7 @@ exports.login = async (req, res) => {
 exports.sendotp = async (req, res) => {
   try {
     const { email } = req.body;
+
     const checkUserPresent = await User.findOne({ email });
 
     if (checkUserPresent) {
@@ -177,7 +186,7 @@ exports.sendotp = async (req, res) => {
         message: "User already registered",
       });
     }
-    let otp = OTPGenerator.generate(6, {
+    var otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
@@ -190,7 +199,7 @@ exports.sendotp = async (req, res) => {
     console.log("Result", result);
 
     while (result) {
-      otp = OTPGenerator.generate(6, {
+      otp = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
         lowerCaseAlphabets: false,
         specialChars: false,
@@ -200,6 +209,7 @@ exports.sendotp = async (req, res) => {
     const otpPayload = { email, otp };
 
     const otpBody = await OTP.create(otpPayload);
+
     console.log('"OTP Body"', otpBody);
 
     res.status(200).json({

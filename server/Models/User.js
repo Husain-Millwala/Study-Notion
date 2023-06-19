@@ -14,7 +14,6 @@ const User = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    trim: true,
   },
   password: {
     type: String,
@@ -22,7 +21,7 @@ const User = new mongoose.Schema({
   },
   accountType: {
     type: String,
-    enum: ["Admin", "Student", "Instructer"],
+    enum: ["Admin", "Student", "Instructor"],
   },
   active: {
     type: Boolean,
