@@ -76,6 +76,8 @@ export function signup(
     } catch (error) {
       console.log("SIGNUP API ERROR............", error);
       toast.error("Signup Failed");
+
+      console.log(accountType, firstName, lastName, email, otp);
       navigate("/signup");
     }
     dispatch(setLoading(false));

@@ -36,14 +36,6 @@ exports.signup = async (req, res) => {
       });
     }
 
-    // if (password !== "^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[a-zA-Zd]{8,}$") {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message:
-    //       "Password must includes 1 upper case, 1 lower case, 1 number, and 1 symbol",
-    //   });
-    // }
-
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
@@ -136,14 +128,14 @@ exports.login = async (req, res) => {
     }
 
     if (await bcrypt.compare(password, user.password)) {
-      const payload = {
-        email: user.email,
-        id: user._id,
-        accountType: user.accountType,
-      };
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "2h",
-      });
+      const token = jwt.sign(
+        { email: user.email, id: user._id, accountType: user.accountType },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      );
+
       user.token = token;
       user.password = undefined;
 

@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const User = require("../Models/User");
 
 //auth
 exports.auth = async (req, res, next) => {
@@ -9,7 +8,7 @@ exports.auth = async (req, res, next) => {
     const token =
       req.cookies.token ||
       req.body.token ||
-      req.header("Authorisation").replace("Bearer ", "");
+      req.header("Authorization").replace("Bearer ", "");
 
     //if token missing, then return response
     if (!token) {
@@ -33,6 +32,7 @@ exports.auth = async (req, res, next) => {
     }
     next();
   } catch (error) {
+    console.log(error);
     return res.status(401).json({
       success: false,
       message: "Something went wrong while validating the token",

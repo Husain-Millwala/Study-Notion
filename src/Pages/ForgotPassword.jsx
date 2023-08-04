@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 import { getPasswordResetToken } from "../Services/operrations/AuthApi";
 
 function ForgotPassword() {
-  const [emailSent, setEmailSent] = useState(false);
   const [email, setEmail] = useState("");
-  const { loading } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const [emailSent, setEmailSent] = useState(false);
 
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
   const handleOnSubmit = (e) => {
     e.preventDefault();
     dispatch(getPasswordResetToken(email, setEmailSent));

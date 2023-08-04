@@ -40,6 +40,7 @@ function SignupForm() {
 
     if (password !== confirmPassword) {
       toast.error("Invalid Credentials");
+      return;
     }
     const signupData = {
       ...formData,
@@ -75,7 +76,6 @@ function SignupForm() {
   return (
     <>
       <div>
-        {" "}
         {
           <Tab
             tabData={tabData}
@@ -143,7 +143,7 @@ function SignupForm() {
           <div className=" flex gap-x-4">
             <label className="relative">
               <p className=" mb-1 text-base text-richblack-5">
-                Password <sup className=" text-pink-200">*</sup>
+                Create Password <sup className=" text-pink-200">*</sup>
               </p>
               <input
                 required
@@ -158,7 +158,7 @@ function SignupForm() {
                 className=" w-full rounded-lg p-3 bg-richblack-800 text-blue-5"
               />
               <span
-                onClick={() => showPassword((prev) => !prev)}
+                onClick={() => setShowPassword((prev) => !prev)}
                 className="absolute right-3 top-10 z-10 cursor-pointer"
               >
                 {showPassword ? (
@@ -174,7 +174,7 @@ function SignupForm() {
               </p>
               <input
                 required
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 value={confirmPassword}
                 onChange={handleOnChange}
@@ -185,7 +185,7 @@ function SignupForm() {
                 className=" w-full rounded-lg p-3 bg-richblack-800 text-blue-5"
               />
               <span
-                onClick={() => showConfirmPassword((prev) => !prev)}
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
                 className="absolute right-3 top-10 z-10 cursor-pointer"
               >
                 {showConfirmPassword ? (
