@@ -4,7 +4,7 @@ const { uploadImageToCloudinary } = require("../Utils/ImageUploader");
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { dateOfBirth = "", about = "", contactNumber } = req.body;
+    const { dateOfBirth = "", about = "", contactNumber = "" } = req.body;
 
     const id = req.user.id;
 

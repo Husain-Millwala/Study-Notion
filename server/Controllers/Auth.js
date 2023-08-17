@@ -22,6 +22,16 @@ exports.signup = async (req, res) => {
       otp,
     } = req.body;
 
+    console.log(
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      accountType,
+      otp
+    );
+
     if (
       !firstName ||
       !lastName ||
@@ -35,6 +45,15 @@ exports.signup = async (req, res) => {
         message: "All fields are required ",
       });
     }
+    console.log(
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      accountType,
+      otp
+    );
 
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -86,10 +105,11 @@ exports.signup = async (req, res) => {
       lastName,
       email,
       contactNumber,
+
       password: hashedPassword,
       accountType,
       additionalDetails: profileDetails._id,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}{" "} ${lastName}`,
+      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}{" "}${lastName}`,
     });
 
     return res.status(200).json({
